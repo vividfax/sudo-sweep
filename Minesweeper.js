@@ -1,8 +1,11 @@
 class Minesweeper {
 
-    constructor() {
+    constructor(x, y) {
 
+        this.x = x;
+        this.y = y;
         this.grid;
+        this.visibility = [...Array(27)].map(e => Array(27));
     }
 
     setMines(sudoku) {
@@ -92,9 +95,10 @@ class Minesweeper {
         return neighbours;
     }
 
-    draw() {
+    draw(x, y) {
 
-        translate(500, 0);
+        push();
+        translate(this.x, this.y);
 
         const cellSize = 15;
 
@@ -104,7 +108,11 @@ class Minesweeper {
                 const x = i * cellSize;
                 const y = j * cellSize;
 
-                fill(light);
+                if (this.visibility[i][j]) {
+                    fill(light);
+                } else {
+                    fill(white);
+                }
                 stroke(mid);
                 strokeWeight(1);
                 rect(x, y, cellSize, cellSize);
@@ -125,10 +133,13 @@ class Minesweeper {
                     fill(mid);
                     textSize(cellSize * .75);
                 }
-                text(number, x + cellSize / 2, y + cellSize / 2);
+                if (this.visibility[i][j]) {
+                    text(number, x + cellSize / 2, y + cellSize / 2 + 1);
+                }
             }
         }
         this.drawGuidelines(cellSize);
+        pop();
     }
 
     drawGuidelines(cellSize) {
@@ -154,5 +165,60 @@ class Minesweeper {
         rect(0, 0, cellSize * 9, cellSize * 9);
         rect(cellSize * 3, 0, cellSize * 3, cellSize * 9);
         rect(0, cellSize * 3, cellSize * 9, cellSize * 3);
+    }
+
+    clicked(x, y) {
+
+        x -= this.x;
+        y -= this.y;
+
+        let cellSize = 15;
+
+        for (let i = 0; i < 27; i++) {
+            for (let j = 0; j < 27; j++) {
+
+                if (x > i * cellSize && x < i * cellSize + cellSize) {
+                    if (y > j * cellSize && y < j * cellSize + cellSize) {
+
+                        if (this.grid[i][j] == "⁕") {
+                            this.explode();
+                        } else if (this.grid[i][j] == "") {
+                            this.visibility[i][j] = true;
+                            this.freeNeighbours(i, j);
+                        } else {
+                            this.visibility[i][j] = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    explode() {
+
+        for (let i = 0; i < 27; i++) {
+            for (let j = 0; j < 27; j++) {
+
+                this.visibility[i][j] = true;
+            }
+        }
+    }
+
+    freeNeighbours(x, y) {
+
+        for (let i = x-1; i <= x+1; i++) {
+
+            for (let j = y-1; j <= y+1; j++) {
+
+                if (i >= 0 && j >= 0) {
+                    if (i != x || j != y) {
+                            if (this.grid[i][j] == "" && !this.visibility[i][j]) {
+                                this.freeNeighbours(i, j);
+                            }
+                        }
+                    this.visibility[i][j] = true;
+                }
+            }
+        }
     }
 }

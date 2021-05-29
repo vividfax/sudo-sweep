@@ -7,6 +7,7 @@ class Sudoku {
         const current = round(random(1, 9));
 
         this.grid = this.findPath(grid, position, current);
+        this.visibility = [...Array(9)].map(e => Array(9));
     }
 
     findPath(grid, position, current) {
@@ -86,6 +87,7 @@ class Sudoku {
 
     draw() {
 
+        push();
         translate(150, 100);
 
         const cellSize = 45;
@@ -114,6 +116,7 @@ class Sudoku {
             }
         }
         this.drawGuidelines(cellSize);
+        pop();
     }
 
     drawGuidelines(cellSize) {

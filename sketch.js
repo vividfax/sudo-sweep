@@ -1,6 +1,10 @@
-const light = '#fcfffd';
+const white = "#fcfffd";
+const light = '#F2FAF9';
 const mid = '#64b6ac';
 const dark = '#5d737e';
+
+let sudo;
+let sweep;
 
 function setup() {
 
@@ -8,16 +12,18 @@ function setup() {
 
 	background(dark);
 
-	let sudo = new Sudoku();
-	let sweep = new Minesweeper();
+	sudo = new Sudoku();
+	sweep = new Minesweeper(650, 100);
 	sweep.setMines(sudo.grid);
-
-	sudo.draw();
-	sweep.draw();
-
-	noLoop();
 }
 
 function draw() {
 
+	sudo.draw();
+	sweep.draw();
+}
+
+function mousePressed() {
+
+	sweep.clicked(mouseX, mouseY);
 }
