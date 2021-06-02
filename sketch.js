@@ -12,9 +12,11 @@ function setup() {
 
 	background(dark);
 
-	sudo = new Sudoku();
-	sweep = new Minesweeper(650, 100);
+	sudo = new Sudoku(100, 100);
+	sweep = new Minesweeper(350, 100);
 	sweep.setMines(sudo.grid);
+
+	document.addEventListener('contextmenu', event => event.preventDefault());
 }
 
 function draw() {
