@@ -33,6 +33,18 @@ function mousePressed() {
 	draw();
 }
 
+function keyPressed() {
+
+	if (keyCode == 82) {
+
+		sudo = new Sudoku(width / 2 - 240 - 30, height / 2 - 120);
+		sweep = new Minesweeper(width / 2 + 30, height / 2 - 120);
+		sweep.setMines(sudo.grid);
+
+		draw();
+	}
+}
+
 function createBackground() {
 
 	for (let i = 0; i < width; i++) {

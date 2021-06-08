@@ -186,7 +186,7 @@ class Minesweeper {
                 if (x > i * cellSize && x < i * cellSize + cellSize) {
                     if (y > j * cellSize && y < j * cellSize + cellSize) {
 
-                        if (mouseButton == LEFT && !this.flagged[i][j]) {
+                        if (mouseButton == LEFT && !this.flagged[i][j] && !keyIsDown(CONTROL)) {
 
                             if (this.grid[i][j] == "⁕") {
                                 this.explode();
@@ -196,7 +196,7 @@ class Minesweeper {
                             } else {
                                 this.visibility[i][j] = true;
                             }
-                        } else if (mouseButton != LEFT) {
+                        } else if (mouseButton != LEFT || keyIsDown(CONTROL)) {
                             this.flagged[i][j] = !this.flagged[i][j];
                         }
                     }
