@@ -93,7 +93,7 @@ class Sudoku {
         push();
         translate(this.x, this.y);
 
-        const cellSize = 45;
+        const cellSize = 60;
 
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
@@ -103,7 +103,7 @@ class Sudoku {
 
                 fill(light);
                 stroke(mid);
-                strokeWeight(1);
+                strokeWeight(3);
                 rect(x, y, cellSize, cellSize);
 
                 fill(dark);
@@ -126,7 +126,7 @@ class Sudoku {
 
         noFill();
         stroke(dark);
-        strokeWeight(2);
+        strokeWeight(4);
 
         rect(0, 0, cellSize * 4, cellSize * 4);
         rect(cellSize * 2, 0, cellSize * 2, cellSize * 4);

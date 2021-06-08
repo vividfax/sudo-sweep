@@ -1,5 +1,5 @@
 const white = "#fcfffd";
-const light = '#F2FAF9';
+const light = '#EAF2F1';
 const mid = '#64b6ac';
 const dark = '#5d737e';
 
@@ -9,18 +9,20 @@ let sweep;
 function setup() {
 
 	createCanvas(windowWidth, windowHeight);
+	createBackground();
 
-	background(dark);
-
-	sudo = new Sudoku(100, 100);
-	sweep = new Minesweeper(350, 100);
+	sudo = new Sudoku(width / 2 - 240 - 30, height / 2 - 120);
+	sweep = new Minesweeper(width / 2 + 30, height / 2 - 120);
 	sweep.setMines(sudo.grid);
 
 	document.addEventListener('contextmenu', event => event.preventDefault());
+
+	noLoop();
 }
 
 function draw() {
 
+	updatePixels();
 	sudo.draw();
 	sweep.draw();
 }
@@ -28,4 +30,20 @@ function draw() {
 function mousePressed() {
 
 	sweep.clicked(mouseX, mouseY);
+	draw();
+}
+
+function createBackground() {
+
+	for (let i = 0; i < width; i++) {
+		for (let j = 0; j < height; j++) {
+
+			if (random() > 0.5) {
+				set(i, j, color("#5E7480"));
+			} else {
+				set(i, j, color("#5A707A"));
+			}
+		}
+	}
+	updatePixels();
 }

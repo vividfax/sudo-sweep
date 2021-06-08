@@ -101,7 +101,7 @@ class Minesweeper {
         push();
         translate(this.x, this.y);
 
-        const cellSize = 45/2;
+        const cellSize = 60/2;
 
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
@@ -114,7 +114,7 @@ class Minesweeper {
                 } else {
                     fill(white);
                 }
-                stroke(mid);
+                stroke(dark);
                 strokeWeight(1);
                 rect(x, y, cellSize, cellSize);
 
@@ -131,7 +131,7 @@ class Minesweeper {
 
                 } else {
 
-                    fill(mid);
+                    fill(dark);
                     textSize(cellSize * .75);
                 }
                 if (this.visibility[i][j]) {
@@ -159,14 +159,14 @@ class Minesweeper {
                 const y = j * cellSize;
 
                 noFill();
-                stroke(dark);
-                strokeWeight(1);
+                stroke(mid);
+                strokeWeight(3);
                 rect(x, y, cellSize, cellSize);
             }
         }
         noFill();
         stroke(dark);
-        strokeWeight(2);
+        strokeWeight(4);
 
         rect(0, 0, cellSize * 4, cellSize * 4);
         rect(cellSize * 2, 0, cellSize * 2, cellSize * 4);
@@ -178,7 +178,7 @@ class Minesweeper {
         x -= this.x;
         y -= this.y;
 
-        let cellSize = 45/2;
+        let cellSize = 60/2;
 
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
@@ -221,7 +221,7 @@ class Minesweeper {
 
             for (let j = y-1; j <= y+1; j++) {
 
-                if (i >= 0 && j >= 0) {
+                if (i >= 0 && j >= 0 && i < 8 && j < 8) {
                     if (i != x || j != y) {
                             if (this.grid[i][j] == "" && !this.visibility[i][j]) {
                                 this.freeNeighbours(i, j);
