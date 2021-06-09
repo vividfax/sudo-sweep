@@ -120,7 +120,7 @@ class Minesweeper {
 
                 noStroke();
                 textAlign(CENTER, CENTER);
-                textFont('monospace');
+                textFont('Fira Code');
 
                 const number = this.grid[i][j];
 
@@ -135,12 +135,12 @@ class Minesweeper {
                     textSize(cellSize * .75);
                 }
                 if (this.visibility[i][j]) {
-                    text(number, x + cellSize / 2, y + cellSize / 2 + 1);
+                    text(number, x + cellSize / 2, y + cellSize / 2 + 2);
                 } else if (this.flagged[i][j]) {
 
                     fill(dark);
                     textSize(cellSize * .75);
-                    text("?", x + cellSize / 2, y + cellSize / 2 + 1);
+                    text("?", x + cellSize / 2, y + cellSize / 2 + 2);
                 }
             }
         }

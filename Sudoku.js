@@ -110,12 +110,12 @@ class Sudoku {
                 noStroke();
                 textSize(cellSize / 2);
                 textAlign(CENTER, CENTER);
-                textFont('monospace');
+                textFont('Fira Code');
 
                 let number = this.grid[i][j];
-                number -= 1; // modded for 0-8 instead of 1-4
+                number -= 1; // modded for 0-3 instead of 1-4
 
-                text(number, x + cellSize / 2, y + cellSize / 2);
+                text(number, x + cellSize / 2, y + cellSize / 2 + 1);
             }
         }
         this.drawGuidelines(cellSize);

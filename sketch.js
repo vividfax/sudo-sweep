@@ -6,6 +6,8 @@ const dark = '#5d737e';
 let sudo;
 let sweep;
 
+let win = false;
+
 function setup() {
 
 	createCanvas(windowWidth, windowHeight);
@@ -22,7 +24,11 @@ function setup() {
 
 function draw() {
 
-	updatePixels();
+	if (win) {
+		background(mid);
+	} else {
+		updatePixels();
+	}
 	sudo.draw();
 	sweep.draw();
 }
