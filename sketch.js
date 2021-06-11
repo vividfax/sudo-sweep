@@ -24,7 +24,9 @@ function setup() {
 
 function draw() {
 
-	if (win) {
+	let validation = sudo.validate() && sweep.validate();
+
+	if (validation || win) {
 		background(mid);
 	} else {
 		updatePixels();
@@ -36,6 +38,7 @@ function draw() {
 function mousePressed() {
 
 	sweep.clicked(mouseX, mouseY);
+	sudo.clicked(mouseX, mouseY);
 	draw();
 }
 

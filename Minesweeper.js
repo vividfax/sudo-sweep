@@ -138,7 +138,7 @@ class Minesweeper {
                     text(number, x + cellSize / 2, y + cellSize / 2 + 2);
                 } else if (this.flagged[i][j]) {
 
-                    fill(dark);
+                    fill(mid);
                     textSize(cellSize * .75);
                     text("?", x + cellSize / 2, y + cellSize / 2 + 2);
                 }
@@ -218,7 +218,6 @@ class Minesweeper {
     freeNeighbours(x, y) {
 
         for (let i = x-1; i <= x+1; i++) {
-
             for (let j = y-1; j <= y+1; j++) {
 
                 if (i >= 0 && j >= 0 && i < 8 && j < 8) {
@@ -233,7 +232,16 @@ class Minesweeper {
         }
     }
 
-    flag() {
+    validate() {
 
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+
+                if (!this.visibility[i][j] && this.grid[i][j] != "⁕") {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
