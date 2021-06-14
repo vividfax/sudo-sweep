@@ -6,10 +6,13 @@ const dark = '#5d737e';
 let sudo;
 let sweep;
 
+let validation;
 let win = false;
 
 let startTime;
 let timeElapsed = "";
+
+let refreshButton;
 
 function setup() {
 
@@ -25,44 +28,33 @@ function setup() {
 	startTime = new Date();
 	startTime = startTime.getTime();
 
-	noLoop();
+	refreshButton = new Button("New puzzle", width/2, height/8*7);
 }
 
 function draw() {
 
-	let validation = sudo.validate() && sweep.validate();
+	validation = sudo.validate() && sweep.validate();
 
 	if (validation || win) {
 		background(mid);
 		displayTime();
+		validation = false;
 	} else {
 		updatePixels();
 	}
 	sudo.draw();
 	sweep.draw();
+
+	refreshButton.hover(mouseX, mouseY);
+	refreshButton.display();
 }
 
 function mousePressed() {
 
 	sweep.clicked(mouseX, mouseY);
 	sudo.clicked(mouseX, mouseY);
-	draw();
-}
 
-function keyPressed() {
-
-	if (keyCode == 82) {
-
-		sudo = new Sudoku(width / 2 - 240 - 30, height / 2 - 120);
-		sweep = new Minesweeper(width / 2 + 30, height / 2 - 120);
-		sweep.setMines(sudo.grid);
-
-		startTime = new Date();
-		startTime = startTime.getTime();
-		timeElapsed = "";
-
-		draw();
-	}
+	refreshButton.clicked(mouseX, mouseY);
 }
 
 function createBackground() {
@@ -94,4 +86,16 @@ function displayTime() {
  	textFont('Fira Code');
 	textAlign(CENTER, CENTER);
 	text(timeElapsed, width/2, height/5);
+}
+
+
+function newPuzzle() {
+
+	sudo = new Sudoku(width / 2 - 240 - 30, height / 2 - 120);
+	sweep = new Minesweeper(width / 2 + 30, height / 2 - 120);
+	sweep.setMines(sudo.grid);
+
+	startTime = new Date();
+	startTime = startTime.getTime();
+	timeElapsed = "";
 }

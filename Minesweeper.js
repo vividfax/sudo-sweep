@@ -7,6 +7,7 @@ class Minesweeper {
         this.grid;
         this.visibility = [...Array(8)].map(e => Array(8));
         this.flagged = [...Array(8)].map(e => Array(8));
+        this.exploded = false;
     }
 
     setMines(sudoku) {
@@ -211,6 +212,7 @@ class Minesweeper {
             for (let j = 0; j < 8; j++) {
 
                 this.visibility[i][j] = true;
+                this.exploded = true;
             }
         }
     }
@@ -238,6 +240,8 @@ class Minesweeper {
             for (let j = 0; j < 8; j++) {
 
                 if (!this.visibility[i][j] && this.grid[i][j] != "⁕") {
+                    return false;
+                } else if (this.exploded) {
                     return false;
                 }
             }
