@@ -8,6 +8,9 @@ let sweep;
 
 let win = false;
 
+let startTime;
+let timeElapsed = "";
+
 function setup() {
 
 	createCanvas(windowWidth, windowHeight);
@@ -19,6 +22,9 @@ function setup() {
 
 	document.addEventListener('contextmenu', event => event.preventDefault());
 
+	startTime = new Date();
+	startTime = startTime.getTime();
+
 	noLoop();
 }
 
@@ -28,6 +34,7 @@ function draw() {
 
 	if (validation || win) {
 		background(mid);
+		displayTime();
 	} else {
 		updatePixels();
 	}
@@ -50,6 +57,10 @@ function keyPressed() {
 		sweep = new Minesweeper(width / 2 + 30, height / 2 - 120);
 		sweep.setMines(sudo.grid);
 
+		startTime = new Date();
+		startTime = startTime.getTime();
+		timeElapsed = "";
+
 		draw();
 	}
 }
@@ -67,4 +78,20 @@ function createBackground() {
 		}
 	}
 	updatePixels();
+}
+
+function displayTime() {
+
+	if (timeElapsed == "") {
+
+		timeElapsed = new Date();
+		timeElapsed = timeElapsed.getTime();
+		timeElapsed = (timeElapsed - startTime) / 1000;
+		timeElapsed += " seconds";
+	}
+	fill(white);
+	textSize(30);
+ 	textFont('Fira Code');
+	textAlign(CENTER, CENTER);
+	text(timeElapsed, width/2, height/5);
 }
