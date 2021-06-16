@@ -236,12 +236,13 @@ class Minesweeper {
 
     validate() {
 
+        if (this.exploded) {
+            return false;
+        }
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
 
                 if (!this.visibility[i][j] && this.grid[i][j] != "⁕") {
-                    return false;
-                } else if (this.exploded) {
                     return false;
                 }
             }

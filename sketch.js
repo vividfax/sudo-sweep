@@ -28,7 +28,7 @@ function setup() {
 	startTime = new Date();
 	startTime = startTime.getTime();
 
-	refreshButton = new Button("New puzzle", width/2, height/8*7);
+	refreshButton = new Button("New game", width/2, height/8*7);
 }
 
 function draw() {
