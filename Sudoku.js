@@ -177,6 +177,10 @@ class Sudoku {
                 if (x > i * cellSize && x < i * cellSize + cellSize) {
                     if (y > j * cellSize && y < j * cellSize + cellSize) {
 
+                        if (startTime == "") {
+                            startTime = new Date();
+                            startTime = startTime.getTime();
+                        }
                         if (!this.hint[i][j]) {
 
                             this.guess[i][j] += 1;

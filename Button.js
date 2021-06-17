@@ -29,7 +29,7 @@ class Button {
 
         textAlign(CENTER, CENTER);
         textFont('Fira Code');
-        textSize(16);
+        textSize(18);
 
         if (this.hovered) {
             fill(dark);

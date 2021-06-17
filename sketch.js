@@ -9,7 +9,7 @@ let sweep;
 let validation;
 let win = false;
 
-let startTime;
+let startTime = "";
 let timeElapsed = "";
 
 let refreshButton;
@@ -25,9 +25,6 @@ function setup() {
 
 	document.addEventListener('contextmenu', event => event.preventDefault());
 
-	startTime = new Date();
-	startTime = startTime.getTime();
-
 	refreshButton = new Button("New game", width/2, height/8*7);
 }
 
@@ -38,7 +35,6 @@ function draw() {
 	if (validation || win) {
 		background(mid);
 		displayTime();
-		validation = false;
 	} else {
 		updatePixels();
 	}
@@ -78,6 +74,10 @@ function displayTime() {
 
 		timeElapsed = new Date();
 		timeElapsed = timeElapsed.getTime();
+
+		if (startTime == "") {
+			startTime = timeElapsed;
+		}
 		timeElapsed = (timeElapsed - startTime) / 1000;
 		timeElapsed += " seconds";
 	}
@@ -95,7 +95,7 @@ function newPuzzle() {
 	sweep = new Minesweeper(width / 2 + 30, height / 2 - 120);
 	sweep.setMines(sudo.grid);
 
-	startTime = new Date();
-	startTime = startTime.getTime();
+	startTime = "";
 	timeElapsed = "";
+	validation = false;
 }
