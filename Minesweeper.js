@@ -187,6 +187,10 @@ class Minesweeper {
                 if (x > i * cellSize && x < i * cellSize + cellSize) {
                     if (y > j * cellSize && y < j * cellSize + cellSize) {
 
+                        if (startTime == "") {
+                            startTime = new Date();
+                            startTime = startTime.getTime();
+                        }
                         if (mouseButton == LEFT && !this.flagged[i][j] && !keyIsDown(CONTROL)) {
 
                             if (this.grid[i][j] == "⁕") {
