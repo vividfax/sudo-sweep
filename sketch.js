@@ -1,4 +1,4 @@
-const white = "#fcfffd";
+const white = "#ffffff";
 const light = '#EAF2F1';
 const mid = '#64b6ac';
 const dark = '#5d737e';

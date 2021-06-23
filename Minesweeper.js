@@ -111,7 +111,7 @@ class Minesweeper {
                 const y = j * cellSize;
 
                 if (this.visibility[i][j]) {
-                    fill(light);
+                    fill("#DBEBE9");
                 } else {
                     fill(white);
                 }
