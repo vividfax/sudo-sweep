@@ -191,7 +191,7 @@ class Minesweeper {
                             startTime = new Date();
                             startTime = startTime.getTime();
                         }
-                        if (mouseButton == LEFT && !this.flagged[i][j] && !keyIsDown(CONTROL)) {
+                        if (mouseButton == LEFT && !this.flagged[i][j]) {
 
                             if (this.grid[i][j] == "⁕") {
                                 this.explode();
@@ -200,8 +200,9 @@ class Minesweeper {
                                 this.freeNeighbours(i, j);
                             } else {
                                 this.visibility[i][j] = true;
+                                this.chord(i, j);
                             }
-                        } else if (mouseButton != LEFT || keyIsDown(CONTROL)) {
+                        } else if (mouseButton != LEFT) {
                             this.flagged[i][j] = !this.flagged[i][j];
                         }
                     }
@@ -233,6 +234,56 @@ class Minesweeper {
                             }
                         }
                     this.visibility[i][j] = true;
+                }
+            }
+        }
+    }
+
+    chord(i, j) {
+
+        console.log(this.grid[i][j], this.flaggedNeighbours(i, j));
+
+        if (this.flaggedNeighbours(i, j) == this.grid[i][j]) {
+            console.log("chord");
+            this.chordNeighbours(i, j);
+        }
+    }
+
+    flaggedNeighbours(x, y) {
+
+        let neighbours = 0;
+
+        for (let i = x - 1; i <= x + 1; i++) {
+            for (let j = y - 1; j <= y + 1; j++) {
+
+                if (i == x && j == y) {
+                    continue;
+                }
+                if (i < 0 || i >= 8 || j < 0 || j >= 8) {
+                    continue;
+                }
+                if (this.flagged[i][j]) {
+                    neighbours += 1;
+                }
+            }
+        }
+        return neighbours
+    }
+
+    chordNeighbours(x, y) {
+
+        for (let i = x-1; i <= x+1; i++) {
+            for (let j = y-1; j <= y+1; j++) {
+
+                if (i >= 0 && j >= 0 && i < 8 && j < 8) {
+
+                    if (this.flagged[i][j]) {
+                        // continue;
+                    } else if (this.grid[i][j] == "⁕") {
+                        this.explode();
+                    } else {
+                        this.visibility[i][j] = true;
+                    }
                 }
             }
         }
