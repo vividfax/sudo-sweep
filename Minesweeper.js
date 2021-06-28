@@ -191,6 +191,9 @@ class Minesweeper {
                             startTime = new Date();
                             startTime = startTime.getTime();
                         }
+                        if (mouseButton == LEFT) {
+                            this.chord(i, j);
+                        }
                         if (mouseButton == LEFT && !this.flagged[i][j]) {
 
                             if (this.grid[i][j] == "⁕") {
@@ -200,7 +203,6 @@ class Minesweeper {
                                 this.freeNeighbours(i, j);
                             } else {
                                 this.visibility[i][j] = true;
-                                this.chord(i, j);
                             }
                         } else if (mouseButton != LEFT) {
                             this.flagged[i][j] = !this.flagged[i][j];
@@ -240,6 +242,8 @@ class Minesweeper {
     }
 
     chord(i, j) {
+
+        console.log(this.grid[i][j], this.flaggedNeighbours(i, j));
 
         if (this.flaggedNeighbours(i, j) == this.grid[i][j]) {
             this.chordNeighbours(i, j);
