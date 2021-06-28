@@ -53,7 +53,8 @@ class Button {
     clicked(x, y) {
 
         if (x > this.x - 100 && x < this.x + 100 && y > this.y - 20 && y < this.y + 20) {
-            newPuzzle();
+            return true;
         }
+        return false;
     }
 }

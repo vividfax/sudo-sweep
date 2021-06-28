@@ -1,21 +1,25 @@
 class Minesweeper {
 
-    constructor(x, y) {
+    constructor(x, y, w, h) {
 
         this.x = x;
         this.y = y;
+        this.w = w;
+        this.h = h;
+        this.size = w * h;
+
         this.grid;
-        this.visibility = [...Array(8)].map(e => Array(8));
-        this.flagged = [...Array(8)].map(e => Array(8));
+        this.visibility = [...Array(this.size * this.w)].map(e => Array(this.size * this.w));
+        this.flagged = [...Array(this.size * this.w)].map(e => Array(this.size * this.w));
         this.exploded = false;
     }
 
     setMines(sudoku) {
 
-        let grid = [...Array(8)].map(e => Array(8));
+        let grid = [...Array(this.size * this.w)].map(e => Array(8));
 
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
+        for (let i = 0; i < this.size; i++) {
+            for (let j = 0; j < this.size; j++) {
 
                 let mines = this.getMines(sudoku[i][j]);
                 grid = this.placeMines(grid, mines, i, j);
@@ -32,7 +36,7 @@ class Minesweeper {
 
         let places = [];
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < this.size; i++) {
 
             if (i < n) {
                 places.push('⁕');
@@ -46,13 +50,13 @@ class Minesweeper {
 
     placeMines(grid, mines, x, y) {
 
-        for (let i = 0; i < 2; i++) {
-            for (let j = 0; j < 2; j++) {
+        for (let i = 0; i < this.w; i++) {
+            for (let j = 0; j < this.h; j++) {
 
-                const x2 = x * 2 + i;
-                const y2 = y * 2 + j;
+                const x2 = x * this.w + i;
+                const y2 = y * this.h + j;
 
-                grid[x2][y2] = mines[j * 2 + i];
+                grid[x2][y2] = mines[j * this.w + i];
             }
         }
         return grid;
@@ -60,8 +64,8 @@ class Minesweeper {
 
     getClues(grid) {
 
-        for (let i = 0; i < 8; i++) {
-            for (let j = 0; j < 8; j++) {
+        for (let i = 0; i < this.size * this.w; i++) {
+            for (let j = 0; j < this.size * this.h; j++) {
 
                 if (grid[i][j] == '⁕') {
                     continue;
@@ -86,7 +90,7 @@ class Minesweeper {
                 if (i == x && j == y) {
                     continue;
                 }
-                if (i < 0 || i >= 8 || j < 0 || j >= 8) {
+                if (i < 0 || i >= this.size * this.w || j < 0 || j >= this.size * this.h) {
                     continue;
                 }
                 if (grid[i][j] == '⁕') {
@@ -102,13 +106,13 @@ class Minesweeper {
         push();
         translate(this.x, this.y);
 
-        const cellSize = 60/2;
+        const cellSize = 60 / this.w;
 
-        for (let i = 0; i < 8; i++) {
-            for (let j = 0; j < 8; j++) {
+        for (let i = 0; i < this.size * this.w; i++) {
+            for (let j = 0; j < this.size * this.h; j++) {
 
                 const x = i * cellSize;
-                const y = j * cellSize;
+                const y = j * 60 / this.h;
 
                 if (this.visibility[i][j]) {
                     fill("#DBEBE9");
@@ -117,7 +121,7 @@ class Minesweeper {
                 }
                 stroke(dark);
                 strokeWeight(1);
-                rect(x, y, cellSize, cellSize);
+                rect(x, y, cellSize, 60 / this.h);
 
                 noStroke();
                 textAlign(CENTER, CENTER);
@@ -136,12 +140,12 @@ class Minesweeper {
                     textSize(cellSize * .75);
                 }
                 if (this.visibility[i][j]) {
-                    text(number, x + cellSize / 2, y + cellSize / 2 + 2);
+                    text(number, x + cellSize / 2, y + 60 / this.h / 2 + 2);
                 } else if (this.flagged[i][j]) {
 
                     fill(mid);
                     textSize(cellSize * .75);
-                    text("?", x + cellSize / 2, y + cellSize / 2 + 2);
+                    text("?", x + cellSize / 2, y + 60 / this.h / 2 + 2);
                 }
             }
         }
@@ -151,10 +155,10 @@ class Minesweeper {
 
     drawGuidelines(cellSize) {
 
-        cellSize *= 2;
+        cellSize *= this.w;
 
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
+        for (let i = 0; i < this.size; i++) {
+            for (let j = 0; j < this.size; j++) {
 
                 const x = i * cellSize;
                 const y = j * cellSize;
@@ -169,9 +173,9 @@ class Minesweeper {
         stroke(dark);
         strokeWeight(4);
 
-        rect(0, 0, cellSize * 4, cellSize * 4);
-        rect(cellSize * 2, 0, cellSize * 2, cellSize * 4);
-        rect(0, cellSize * 2, cellSize * 4, cellSize * 2);
+        rect(0, 0, cellSize * this.size, cellSize * this.size);
+        rect(cellSize * this.w, 0, cellSize * this.w, cellSize * this.size);
+        rect(0, cellSize * this.h, cellSize * this.size, cellSize * this.h);
     }
 
     clicked(x, y) {
@@ -179,13 +183,13 @@ class Minesweeper {
         x -= this.x;
         y -= this.y;
 
-        let cellSize = 60/2;
+        let cellSize = 60/this.w;
 
-        for (let i = 0; i < 8; i++) {
-            for (let j = 0; j < 8; j++) {
+        for (let i = 0; i < this.size * this.w; i++) {
+            for (let j = 0; j < this.size * this.h; j++) {
 
                 if (x > i * cellSize && x < i * cellSize + cellSize) {
-                    if (y > j * cellSize && y < j * cellSize + cellSize) {
+                    if (y > j * 60 / this.h && y < j * 60 / this.h + 60 / this.h) {
 
                         if (startTime == "") {
                             startTime = new Date();
@@ -215,8 +219,8 @@ class Minesweeper {
 
     explode() {
 
-        for (let i = 0; i < 8; i++) {
-            for (let j = 0; j < 8; j++) {
+        for (let i = 0; i < this.size * this.w; i++) {
+            for (let j = 0; j < this.size * this.h; j++) {
 
                 this.visibility[i][j] = true;
                 this.exploded = true;
@@ -229,7 +233,7 @@ class Minesweeper {
         for (let i = x-1; i <= x+1; i++) {
             for (let j = y-1; j <= y+1; j++) {
 
-                if (i >= 0 && j >= 0 && i < 8 && j < 8) {
+                if (i >= 0 && j >= 0 && i < this.size * this.w && j < this.size * this.h) {
                     if (i != x || j != y) {
                             if (this.grid[i][j] == "" && !this.visibility[i][j]) {
                                 this.freeNeighbours(i, j);
@@ -260,7 +264,7 @@ class Minesweeper {
                 if (i == x && j == y) {
                     continue;
                 }
-                if (i < 0 || i >= 8 || j < 0 || j >= 8) {
+                if (i < 0 || i >= this.size * this.w || j < 0 || j >= this.size * this.h) {
                     continue;
                 }
                 if (this.flagged[i][j]) {
@@ -276,7 +280,7 @@ class Minesweeper {
         for (let i = x-1; i <= x+1; i++) {
             for (let j = y-1; j <= y+1; j++) {
 
-                if (i >= 0 && j >= 0 && i < 8 && j < 8) {
+                if (i >= 0 && j >= 0 && i < this.size * this.w && j < this.size * this.h) {
 
                     if (this.flagged[i][j]) {
                         // continue;
@@ -295,8 +299,8 @@ class Minesweeper {
         if (this.exploded) {
             return false;
         }
-        for (let i = 0; i < 8; i++) {
-            for (let j = 0; j < 8; j++) {
+        for (let i = 0; i < this.size * this.w; i++) {
+            for (let j = 0; j < this.size * this.h; j++) {
 
                 if (!this.visibility[i][j] && this.grid[i][j] != "⁕") {
                     return false;

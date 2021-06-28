@@ -1,25 +1,30 @@
 class Sudoku {
 
-    constructor(x, y) {
+    constructor(x, y, w, h) {
 
         this.x = x;
         this.y = y;
+        this.w = w;
+        this.h = h;
+        this.size = w * h;
 
-        const grid = [...Array(4)].map(e => Array(4));
+        const grid = [...Array(this.size)].map(e => Array(this.size));
         const position = 0;
-        const current = round(random(1, 4));
+        const current = round(random(1, this.size));
 
         this.grid = this.findPath(grid, position, current);
-        this.visibility = [...Array(4)].map(e => Array(4));
-        this.guess= [...Array(4)].map(e => Array(4));
-        this.hint = [...Array(4)].map(e => Array(4));
+        this.visibility = [...Array(this.size)].map(e => Array(this.size));
+        this.guess= [...Array(this.size)].map(e => Array(this.size));
+        this.hint = [...Array(this.size)].map(e => Array(this.size));
 
         this.hide();
+
+        console.log(this.grid);
     }
 
     findPath(grid, position, current) {
 
-        if (position == 16) {
+        if (position == this.size * this.size) {
             return grid;
         }
         if (this.conflict(grid, position, current)) {
@@ -31,7 +36,15 @@ class Sudoku {
 
         position++;
 
-        let options = [1, 2, 3, 4];
+        let options;
+
+        if (this.size == 4) {
+            options = [1, 2, 3, 4];
+        } else if (this.size == 6) {
+            options = [1, 2, 3, 4, 5, 6];
+        } else if (this.size == 9){
+            options = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        }
         options = shuffle(options);
 
         for (let i = 0; i < options.length; i++) {
@@ -53,7 +66,7 @@ class Sudoku {
         const row = this.getRow(position);
         const sector = this.getSector(position);
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < this.size; i++) {
 
             if (grid[column][i] == current || grid[i][row] == current) {
                 return true;
@@ -78,18 +91,18 @@ class Sudoku {
 
         let x = this.getColumn(position);
         let y = this.getRow(position);
-        x = floor(x / 2);
-        y = floor(y / 2);
+        x = floor(x / this.w);
+        y = floor(y / this.h);
 
-        return y * 2 + x;
+        return y * this.h + x;
     }
 
     getColumn(position) {
-        return position % 4;
+        return position % this.size;
     }
 
     getRow(position) {
-        return floor(position / 4);
+        return floor(position / this.size);
     }
 
     draw() {
@@ -99,8 +112,8 @@ class Sudoku {
 
         const cellSize = 60;
 
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
+        for (let i = 0; i < this.size; i++) {
+            for (let j = 0; j < this.size; j++) {
 
                 const x = i * cellSize;
                 const y = j * cellSize;
@@ -125,7 +138,7 @@ class Sudoku {
                     number = this.guess[i][j];
                     fill(mid);
                 }
-                number -= 1; // modded for 0-3 instead of 1-4
+                number -= 1; // modded for 0-3 instead of 1-this.size
                 if (number == -1) {
                     number = "";
                 }
@@ -142,17 +155,26 @@ class Sudoku {
         stroke(dark);
         strokeWeight(4);
 
-        rect(0, 0, cellSize * 4, cellSize * 4);
-        rect(cellSize * 2, 0, cellSize * 2, cellSize * 4);
-        rect(0, cellSize * 2, cellSize * 4, cellSize * 2);
+        rect(0, 0, cellSize * this.size, cellSize * this.size);
+        rect(cellSize * this.w, 0, cellSize * this.w, cellSize * this.size);
+        rect(0, cellSize * this.h, cellSize * this.size, cellSize * this.h);
     }
 
     hide() {
 
-        let rand = shuffle([0, 0, 0, -1]);
+        let arr;
 
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
+        if (this.size == 4) {
+            arr = [0, 0, 0, -1];
+        } else if (this.size == 6) {
+            arr = [0, 0, 0, 0, 0, -1];
+        } else if (this.size == 9) {
+            arr = [0, 0, 0, 0, 0, 0, 0, 0, -1];
+        }
+        let rand = shuffle(arr);
+
+        for (let i = 0; i < this.size; i++) {
+            for (let j = 0; j < this.size; j++) {
 
                 this.guess[i][j] = 0;
 
@@ -171,8 +193,8 @@ class Sudoku {
 
         let cellSize = 60;
 
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
+        for (let i = 0; i < this.size; i++) {
+            for (let j = 0; j < this.size; j++) {
 
                 if (x > i * cellSize && x < i * cellSize + cellSize) {
                     if (y > j * cellSize && y < j * cellSize + cellSize) {
@@ -197,8 +219,8 @@ class Sudoku {
 
     validate() {
 
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
+        for (let i = 0; i < this.size; i++) {
+            for (let j = 0; j < this.size; j++) {
 
                 if (this.grid[i][j] != this.guess[i][j]) {
                     return false;
@@ -207,5 +229,4 @@ class Sudoku {
         }
         return true;
     }
-
 }

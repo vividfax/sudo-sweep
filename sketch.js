@@ -13,19 +13,27 @@ let startTime = "";
 let timeElapsed = "";
 
 let refreshButton;
+let sizeButton;
+
+let w = 2;
+let h = 2;
+
+let sizes = [[2, 2], [3, 2], [3, 3]];
+let size = 0;
 
 function setup() {
 
 	createCanvas(windowWidth, windowHeight);
 	createBackground();
 
-	sudo = new Sudoku(width / 2 - 240 - 30, height / 2 - 120);
-	sweep = new Minesweeper(width / 2 + 30, height / 2 - 120);
+	sudo = new Sudoku(width / 2 - 60 * w*h - 30, height / 2 - 30 * w*h, w, h);
+	sweep = new Minesweeper(width / 2 + 30, height / 2 - 30 * w*h, w, h);
 	sweep.setMines(sudo.grid);
 
 	document.addEventListener('contextmenu', event => event.preventDefault());
 
-	refreshButton = new Button("New game", width/2, height/8*7);
+	refreshButton = new Button("New game", width/2 + 130, height - 50);
+	sizeButton = new Button("Change size", width/2 - 130, height - 50);
 }
 
 function draw() {
@@ -43,6 +51,9 @@ function draw() {
 
 	refreshButton.hover(mouseX, mouseY);
 	refreshButton.display();
+
+	sizeButton.hover(mouseX, mouseY);
+	sizeButton.display();
 }
 
 function mousePressed() {
@@ -50,7 +61,20 @@ function mousePressed() {
 	sweep.clicked(mouseX, mouseY);
 	sudo.clicked(mouseX, mouseY);
 
-	refreshButton.clicked(mouseX, mouseY);
+	if (refreshButton.clicked(mouseX, mouseY)) {
+		newPuzzle();
+	}
+	if (sizeButton.clicked(mouseX, mouseY)) {
+
+		size++;
+
+		if (size > 2) {
+			size = 0;
+		}
+		w = sizes[size][0];
+		h = sizes[size][1];
+		newPuzzle();
+	}
 }
 
 function createBackground() {
@@ -85,14 +109,14 @@ function displayTime() {
 	textSize(30);
  	textFont('Fira Code');
 	textAlign(CENTER, CENTER);
-	text(timeElapsed, width/2, height/5);
+	text(timeElapsed, width/2, 50);
 }
 
 
 function newPuzzle() {
 
-	sudo = new Sudoku(width / 2 - 240 - 30, height / 2 - 120);
-	sweep = new Minesweeper(width / 2 + 30, height / 2 - 120);
+	sudo = new Sudoku(width / 2 - 60 * w*h - 30, height / 2 - 30 * w*h, w, h);
+	sweep = new Minesweeper(width / 2 + 30, height / 2 - 30 * w*h, w, h);
 	sweep.setMines(sudo.grid);
 
 	startTime = "";
