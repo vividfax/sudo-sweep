@@ -241,10 +241,7 @@ class Minesweeper {
 
     chord(i, j) {
 
-        console.log(this.grid[i][j], this.flaggedNeighbours(i, j));
-
         if (this.flaggedNeighbours(i, j) == this.grid[i][j]) {
-            console.log("chord");
             this.chordNeighbours(i, j);
         }
     }
