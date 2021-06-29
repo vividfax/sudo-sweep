@@ -18,8 +18,6 @@ class Sudoku {
         this.hint = [...Array(this.size)].map(e => Array(this.size));
 
         this.hide();
-
-        console.log(this.grid);
     }
 
     findPath(grid, position, current) {
@@ -216,7 +214,6 @@ class Sudoku {
                         if (!this.hint[i][j] && mouseButton == LEFT) {
 
                             this.guess[i][j] += 1;
-
 
                             if (this.guess[i][j] == max) {
                                 this.guess[i][j] = 0;

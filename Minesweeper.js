@@ -195,9 +195,6 @@ class Minesweeper {
                             startTime = new Date();
                             startTime = startTime.getTime();
                         }
-                        if (mouseButton == LEFT) {
-                            this.chord(i, j);
-                        }
                         if (mouseButton == LEFT && !this.flagged[i][j]) {
 
                             if (this.grid[i][j] == "⁕") {
@@ -210,6 +207,9 @@ class Minesweeper {
                             }
                         } else if (mouseButton != LEFT) {
                             this.flagged[i][j] = !this.flagged[i][j];
+                        }
+                        if (mouseButton == LEFT) {
+                            this.chord(i, j);
                         }
                     }
                 }
@@ -233,21 +233,23 @@ class Minesweeper {
         for (let i = x-1; i <= x+1; i++) {
             for (let j = y-1; j <= y+1; j++) {
 
-                if (i >= 0 && j >= 0 && i < this.size * this.w && j < this.size * this.h) {
-                    if (i != x || j != y) {
-                            if (this.grid[i][j] == "" && !this.visibility[i][j]) {
-                                this.freeNeighbours(i, j);
-                            }
-                        }
+                if (i == x && j == y) {
+                    continue;
+                } else if (i < 0 || j < 0 || i >= this.size * this.w || j >= this.size * this.h) {
+                    continue;
+                }
+                if (!this.visibility[i][j]) {
                     this.visibility[i][j] = true;
+
+                    if (this.grid[i][j] == "") {
+                        this.freeNeighbours(i, j);
+                    }
                 }
             }
         }
     }
 
     chord(i, j) {
-
-        console.log(this.grid[i][j], this.flaggedNeighbours(i, j));
 
         if (this.flaggedNeighbours(i, j) == this.grid[i][j]) {
             this.chordNeighbours(i, j);
