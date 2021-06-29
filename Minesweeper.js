@@ -288,6 +288,9 @@ class Minesweeper {
                         // continue;
                     } else if (this.grid[i][j] == "⁕") {
                         this.explode();
+                    } else if (this.grid[i][j] == "") {
+                        this.visibility[i][j] = true;
+                        this.freeNeighbours(i,j);
                     } else {
                         this.visibility[i][j] = true;
                     }

@@ -42,6 +42,7 @@ function setup() {
 		h = sizes[size][1];
 		newPuzzle();
 	});
+	noLoop();
 }
 
 function draw() {
@@ -62,6 +63,8 @@ function mousePressed() {
 
 	sweep.clicked(mouseX, mouseY);
 	sudo.clicked(mouseX, mouseY);
+
+	draw();
 }
 
 function createBackground() {
