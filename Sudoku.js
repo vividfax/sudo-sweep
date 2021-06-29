@@ -203,11 +203,22 @@ class Sudoku {
                             startTime = new Date();
                             startTime = startTime.getTime();
                         }
+
+                        let max;
+
+                        if (this.size == 4) {
+                            max = 5;
+                        } else if (this.size == 6) {
+                            max = 7;
+                        } else if (this.size == 9) {
+                            max = 10;
+                        }
                         if (!this.hint[i][j] && mouseButton == LEFT) {
 
                             this.guess[i][j] += 1;
 
-                            if (this.guess[i][j] == 5) {
+
+                            if (this.guess[i][j] == max) {
                                 this.guess[i][j] = 0;
                             }
                         } else if (!this.hint[i][j]) {
@@ -215,7 +226,7 @@ class Sudoku {
                             this.guess[i][j] -= 1;
 
                             if (this.guess[i][j] == -1) {
-                                this.guess[i][j] = 4;
+                                this.guess[i][j] = max - 1;
                             }
                         }
                     }
