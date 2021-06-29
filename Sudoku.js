@@ -203,12 +203,19 @@ class Sudoku {
                             startTime = new Date();
                             startTime = startTime.getTime();
                         }
-                        if (!this.hint[i][j]) {
+                        if (!this.hint[i][j] && mouseButton == LEFT) {
 
                             this.guess[i][j] += 1;
 
                             if (this.guess[i][j] == 5) {
                                 this.guess[i][j] = 0;
+                            }
+                        } else if (!this.hint[i][j]) {
+
+                            this.guess[i][j] -= 1;
+
+                            if (this.guess[i][j] == -1) {
+                                this.guess[i][j] = 4;
                             }
                         }
                     }
