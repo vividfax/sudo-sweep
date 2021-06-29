@@ -11,6 +11,8 @@ button {
     color: #fff;
     background-color: #64b6ac;
     left: 50%;
+    user-select: none;
+    -moz-user-select: none;
 }
 
 button:hover {
