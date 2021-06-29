@@ -32,8 +32,16 @@ function setup() {
 
 	document.addEventListener('contextmenu', event => event.preventDefault());
 
-	refreshButton = new Button("New game", width/2 + 130, height - 50);
-	sizeButton = new Button("Change size", width/2 - 130, height - 50);
+	select("#refresh").mousePressed(() => newPuzzle());
+	select("#size").mousePressed(() => {
+		size++;
+		if (size > 2) {
+			size = 0;
+		}
+		w = sizes[size][0];
+		h = sizes[size][1];
+		newPuzzle();
+	});
 }
 
 function draw() {
@@ -48,33 +56,12 @@ function draw() {
 	}
 	sudo.draw();
 	sweep.draw();
-
-	refreshButton.hover(mouseX, mouseY);
-	refreshButton.display();
-
-	sizeButton.hover(mouseX, mouseY);
-	sizeButton.display();
 }
 
 function mousePressed() {
 
 	sweep.clicked(mouseX, mouseY);
 	sudo.clicked(mouseX, mouseY);
-
-	if (refreshButton.clicked(mouseX, mouseY)) {
-		newPuzzle();
-	}
-	if (sizeButton.clicked(mouseX, mouseY)) {
-
-		size++;
-
-		if (size > 2) {
-			size = 0;
-		}
-		w = sizes[size][0];
-		h = sizes[size][1];
-		newPuzzle();
-	}
 }
 
 function createBackground() {

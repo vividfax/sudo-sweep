@@ -1,0 +1,27 @@
+button {
+    font-family: "Fira Code", serif;
+    width: 200px;
+    height: 40px;
+    position: absolute;
+    bottom: 30px;
+    border-radius: 5px;
+    border-color: #5d737e;
+    border-style: solid;
+    font-size: 18px;
+    color: #fff;
+    background-color: #64b6ac;
+    left: 50%;
+}
+
+button:hover {
+    color: #5d737e;
+    background-color: #fff;
+}
+
+#size {
+    transform: translate(-230px, 0);
+}
+
+#refresh {
+    transform: translate(30px, 0);
+}
