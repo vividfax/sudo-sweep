@@ -12,9 +12,6 @@ let win = false;
 let startTime = "";
 let timeElapsed = "";
 
-let refreshButton;
-let sizeButton;
-
 let w = 2;
 let h = 2;
 
