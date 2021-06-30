@@ -205,7 +205,7 @@ class Minesweeper {
                             } else {
                                 this.visibility[i][j] = true;
                             }
-                        } else if (mouseButton != LEFT) {
+                        } else if (mouseButton != LEFT && !this.visibility[i][j]) {
                             this.flagged[i][j] = !this.flagged[i][j];
                         }
                         if (mouseButton == LEFT) {
@@ -269,7 +269,7 @@ class Minesweeper {
                 if (i < 0 || i >= this.size * this.w || j < 0 || j >= this.size * this.h) {
                     continue;
                 }
-                if (this.flagged[i][j]) {
+                if (this.flagged[i][j] && !this.visibility[i][j]) {
                     neighbours += 1;
                 }
             }
