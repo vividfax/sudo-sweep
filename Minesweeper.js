@@ -21,7 +21,7 @@ class Minesweeper {
         for (let i = 0; i < this.size; i++) {
             for (let j = 0; j < this.size; j++) {
 
-                let mines = this.getMines(sudoku[i][j]);
+                let mines = this.createMines(sudoku[i][j]);
                 grid = this.placeMines(grid, mines, i, j);
             }
         }
@@ -30,9 +30,9 @@ class Minesweeper {
         this.grid = grid;
     }
 
-    getMines(n) {
+    createMines(n) {
 
-        n -= 1; // modded for 0-8 instead of 1-4
+        n -= 1; // modded for 0-8 instead of 1-9
 
         let places = [];
 
