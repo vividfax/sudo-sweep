@@ -6,12 +6,10 @@ class Minesweeper {
         this.y = y;
         this.w = w;
         this.h = h;
-		this.subsize = 2;
-		if (this.w + this.h == 5) this.subsize = 3;
-		if (this.w + this.h == 6) this.subsize = 4;
+        this.subsize = 2;
+        if (this.w + this.h == 5) this.subsize = 3;
+        if (this.w + this.h == 6) this.subsize = 4;
         this.size = w * h;
-		console.log(this.size);
-		console.log(this.subsize);
 
         this.grid;
         this.visibility = [...Array(this.size * this.subsize)].map(e => Array(this.size * this.subsize));
@@ -27,7 +25,6 @@ class Minesweeper {
             for (let j = 0; j < this.size; j++) {
 
                 let mines = this.createMines(sudoku[i][j]);
-				console.log(mines);
                 grid = this.placeMines(grid, mines, i, j);
             }
         }
@@ -119,7 +116,7 @@ class Minesweeper {
 
                 const x = i * cellSize;
                 const y = j * 60 / this.subsize;
-				const number = this.grid[i][j];
+                const number = this.grid[i][j];
 
                 if (this.visibility[i][j] && !(this.flagged[i][j] && number == '⁕')) {
                     fill("#DBEBE9");
@@ -144,16 +141,16 @@ class Minesweeper {
                     fill(dark);
                     textSize(cellSize * .75);
                 }
-				if (this.flagged[i][j] && !(this.visibility[i][j] && number != '⁕')) {
-					fill(mid);
+                if (this.flagged[i][j] && !(this.visibility[i][j] && number != '⁕')) {
+                    fill(mid);
                     textSize(cellSize * .75);
                     text("?", x + cellSize / 2, y + 60 / this.subsize / 2 + 2);
                 } else if (this.visibility[i][j]) {
-					if (number == '⁕') {
-						text('*', x + cellSize / 2, y + 60 / this.subsize / 2 + 2);
-					} else {
-						text(number, x + cellSize / 2, y + 60 / this.subsize / 2 + 2);
-					}
+                    if (number == '⁕') {
+                        text('*', x + cellSize / 2, y + 60 / this.subsize / 2 + 2);
+                    } else {
+                        text(number, x + cellSize / 2, y + 60 / this.subsize / 2 + 2);
+                    }
                 }
             }
         }
