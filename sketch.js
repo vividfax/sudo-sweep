@@ -57,7 +57,6 @@ function draw() {
 		displayTime();
 	} else if (lose) {
 		displayTime();
-		lose = false;
 	}else {
 		updatePixels();
 	}
@@ -118,4 +117,5 @@ function newPuzzle() {
 	startTime = "";
 	timeElapsed = "";
 	validation = false;
+	lose = false;
 }
