@@ -14,8 +14,11 @@ let timeElapsed = "";
 
 let w = 2;
 let h = 2;
+let subw = 2;
+let subh = 2;
 
-let sizes = [[2, 2], [3, 2], [3, 3]];
+let sizes = [[2, 2], [3, 2], [3, 2], [3, 3], [3, 3]];
+let subsizes = [[2, 2], [3, 2], [3, 3], [3, 3], [4, 4]];
 let size = 0;
 
 function setup() {
@@ -24,7 +27,7 @@ function setup() {
 	createBackground();
 
 	sudo = new Sudoku(width / 2 - 60 * w*h - 30, height / 2 - 30 * w*h, w, h);
-	sweep = new Minesweeper(width / 2 + 30, height / 2 - 30 * w*h, w, h);
+	sweep = new Minesweeper(width / 2 + 30, height / 2 - 30 * w*h, w, h, subw, subh);
 	sweep.setMines(sudo.grid);
 
 	document.addEventListener('contextmenu', event => event.preventDefault());
@@ -32,11 +35,13 @@ function setup() {
 	select("#refresh").mousePressed(() => newPuzzle());
 	select("#size").mousePressed(() => {
 		size++;
-		if (size > 2) {
+		if (size > 4) {
 			size = 0;
 		}
 		w = sizes[size][0];
 		h = sizes[size][1];
+		subw = subsizes[size][0];
+		subh = subsizes[size][1];
 		newPuzzle();
 	});
 	noLoop();
@@ -103,7 +108,7 @@ function displayTime() {
 function newPuzzle() {
 
 	sudo = new Sudoku(width / 2 - 60 * w*h - 30, height / 2 - 30 * w*h, w, h);
-	sweep = new Minesweeper(width / 2 + 30, height / 2 - 30 * w*h, w, h);
+	sweep = new Minesweeper(width / 2 + 30, height / 2 - 30 * w*h, w, h, subw, subh);
 	sweep.setMines(sudo.grid);
 
 	startTime = "";
