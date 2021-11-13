@@ -8,6 +8,7 @@ let sweep;
 
 let validation;
 let win = false;
+let lose = false;
 
 let startTime = "";
 let timeElapsed = "";
@@ -54,7 +55,10 @@ function draw() {
 	if (validation || win) {
 		background(mid);
 		displayTime();
-	} else {
+	} else if (lose) {
+		displayTime();
+		lose = false;
+	}else {
 		updatePixels();
 	}
 	sudo.draw();

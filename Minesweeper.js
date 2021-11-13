@@ -204,6 +204,7 @@ class Minesweeper {
 
                             if (this.grid[i][j] == "⁕") {
                                 this.explode();
+                                lose = true;
                             } else if (this.grid[i][j] == "") {
                                 this.visibility[i][j] = true;
                                 this.freeNeighbours(i, j);
